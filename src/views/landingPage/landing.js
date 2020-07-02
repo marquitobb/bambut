@@ -21,6 +21,7 @@ class Landing extends React.Component {
         { src: "assets/js/scripts.js" },
     ]
     //Append the script element on each iteration
+    // eslint-disable-next-line array-callback-return
     scripts.map(item => {
         const script = document.createElement("script")
         script.src = item.src
@@ -111,6 +112,7 @@ class Landing extends React.Component {
                     <i className="fa fa-pencil"></i>
                   </div>
                 </div>
+                
                 <div className="form-bottom">
                   <form onSubmit={this.handleSubmit}>
                     <div className="form-group">
@@ -160,6 +162,7 @@ class Landing extends React.Component {
                     </button>
                   </form>
                 </div>
+                
               </div>
             </div>
           </div>
