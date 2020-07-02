@@ -4,6 +4,7 @@ import axios from "axios";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
+
 class Landing extends React.Component {
   constructor(props) {
     super(props);
@@ -13,6 +14,20 @@ class Landing extends React.Component {
       celular: "",
     };
   }
+
+  componentDidMount(){
+    //An array of assets
+    let scripts = [
+        { src: "assets/js/scripts.js" },
+    ]
+    //Append the script element on each iteration
+    scripts.map(item => {
+        const script = document.createElement("script")
+        script.src = item.src
+        script.async = true
+        document.body.appendChild(script)
+    })
+ }
 
   handleName = (event) => {
     this.setState({
@@ -31,31 +46,6 @@ class Landing extends React.Component {
       celular: event.target.value,
     });
   };
-
-  /*handleSubmit = (event) => {
-    console.log("nombre-->",this.state.nombre);
-    console.log("correo-->",this.state.correo);
-    console.log("celular-->",this.state.celular);
-    axios
-      .post("https://bambut.herokuapp.com/register", {
-        nombre: this.state.nombre,
-        correo: this.state.correo,
-        celular: this.state.celular,
-      })
-      .then((response) => {
-          alert("se registro");
-          console.log(response);
-          this.setState({
-            nombre:"",
-            correo:"",
-            celular:""
-          });
-      })
-      .catch((error)=> {
-        console.log(error);
-      });
-    event.preventDefault();
-  };*/
 
   handleSubmit = (event) => {
     console.log("nombre-->",this.state.nombre);
@@ -100,18 +90,13 @@ class Landing extends React.Component {
       <div className="form-group">
           <ToastContainer />
       </div>
-        <div className="inner-bg">
+        {/*<div className="">*/}
           <div className="container">
-            <div className="row">
-              <div className="col-sm-8 col-sm-offset-2 text">
+              <div className="text">
                 <h1>
                   <strong>Bambut</strong> Formulario de registro
                 </h1>
-                <div className="description">
-                  <p>Bienvenido a la pagina principal</p>
-                </div>
               </div>
-            </div>
             <div className="row">
               <div className="col-sm-6 phone">
                 <img src="assets/img/iphone.png" alt="" />
@@ -178,7 +163,7 @@ class Landing extends React.Component {
               </div>
             </div>
           </div>
-        </div>
+        {/*</div>*/}
       </div>
     );
   }
