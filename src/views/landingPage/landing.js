@@ -1,19 +1,114 @@
 /* eslint-disable jsx-a11y/no-redundant-roles */
 import React from "react";
+import axios from "axios";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 class Landing extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      nombre: "",
+      correo: "",
+      celular: "",
+    };
+  }
+
+  handleName = (event) => {
+    this.setState({
+      nombre: event.target.value,
+    });
+  };
+
+  handleEmail = (event) => {
+    this.setState({
+      correo: event.target.value,
+    });
+  };
+
+  handlePhone = (event) => {
+    this.setState({
+      celular: event.target.value,
+    });
+  };
+
+  /*handleSubmit = (event) => {
+    console.log("nombre-->",this.state.nombre);
+    console.log("correo-->",this.state.correo);
+    console.log("celular-->",this.state.celular);
+    axios
+      .post("https://bambut.herokuapp.com/register", {
+        nombre: this.state.nombre,
+        correo: this.state.correo,
+        celular: this.state.celular,
+      })
+      .then((response) => {
+          alert("se registro");
+          console.log(response);
+          this.setState({
+            nombre:"",
+            correo:"",
+            celular:""
+          });
+      })
+      .catch((error)=> {
+        console.log(error);
+      });
+    event.preventDefault();
+  };*/
+
+  handleSubmit = (event) => {
+    console.log("nombre-->",this.state.nombre);
+    console.log("correo-->",this.state.correo);
+    console.log("celular-->",this.state.celular);
+
+    axios
+    .post("https://bambut.herokuapp.com/register",{
+      nombre: this.state.nombre,
+      correo: this.state.correo,
+      celular: this.state.celular,
+    })
+    .then(response =>{
+      console.log(response);
+      //alert("se registro correctamente")
+      toast.success('Usuario registrado')
+      this.setState({
+        nombre:"",
+        correo:"",
+        celular:""
+      });
+    })
+    .catch(error => {
+      console.log(error);
+      //alert("correo o numero incorrectos")
+      toast.error('usuario invalido')
+      this.setState({
+        nombre:"",
+        correo:"",
+        celular:""
+      });
+      window.location='/inicio';
+    });
+
+    event.preventDefault();
+  };
+
   render() {
     return (
       <div className="top-content">
+      {/*used toast alert */}
+      <div className="form-group">
+          <ToastContainer />
+      </div>
         <div className="inner-bg">
           <div className="container">
             <div className="row">
               <div className="col-sm-8 col-sm-offset-2 text">
                 <h1>
-                  <strong>Bambut</strong> Registration Form
+                  <strong>Bambut</strong> Formulario de registro
                 </h1>
                 <div className="description">
-                  <p>this lading page for Register</p>
+                  <p>Bienvenido a la pagina principal</p>
                 </div>
               </div>
             </div>
@@ -24,58 +119,59 @@ class Landing extends React.Component {
               <div className="col-sm-5 form-box">
                 <div className="form-top">
                   <div className="form-top-left">
-                    <h3>Register to our App</h3>
-                    <p>Fill in the form below to get instant access:</p>
+                    <h3>Registrate con nosotros</h3>
+                    <p>llena este pequeño formulario</p>
                   </div>
                   <div className="form-top-right">
                     <i className="fa fa-pencil"></i>
                   </div>
                 </div>
                 <div className="form-bottom">
-                  <form
-                    role="form"
-                    action=""
-                    method="post"
-                    className="registration-form"
-                  >
+                  <form onSubmit={this.handleSubmit}>
                     <div className="form-group">
                       <label className="sr-only" htmlFor="form-first-name">
-                        First name
+                        Name
                       </label>
                       <input
                         type="text"
                         name="form-first-name"
-                        placeholder="First name..."
+                        placeholder="Nombres..."
                         className="form-first-name form-control"
                         id="form-first-name"
+                        value={this.state.nombre}
+                        onChange={this.handleName}
                       />
                     </div>
                     <div className="form-group">
                       <label className="sr-only" htmlFor="form-last-name">
-                        Last name
+                        correo
                       </label>
                       <input
                         type="text"
                         name="form-last-name"
-                        placeholder="Last name..."
+                        placeholder="Correo..."
                         className="form-last-name form-control"
                         id="form-last-name"
+                        value={this.state.correo}
+                        onChange={this.handleEmail}
                       />
                     </div>
                     <div className="form-group">
                       <label className="sr-only" htmlFor="form-email">
-                        Email
+                        celular
                       </label>
                       <input
                         type="text"
                         name="form-email"
-                        placeholder="Email..."
+                        placeholder="Celular..."
                         className="form-email form-control"
                         id="form-email"
+                        value={this.state.celular}
+                        onChange={this.handlePhone}
                       />
                     </div>
                     <button type="submit" className="btn">
-                      Sign me up!
+                      ¡Registrate!
                     </button>
                   </form>
                 </div>
