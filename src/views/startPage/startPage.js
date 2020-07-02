@@ -13,11 +13,32 @@ class StartPage extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      nombre: "marco",
-      correo: "jose@gmail.com",
-      celular: "3121385579",
+      nombre: "",
+      correo: localStorage.getItem('mydata'),
+      celular: "",
     };
   }
+
+  async componentDidMount(){
+    await this.fetchAPI()
+  }
+
+  fetchAPI = async() =>{
+    const url = `https://bambut.herokuapp.com/find?correo=${this.state.correo}`
+    let res = await fetch(url)
+    const data = await res.json()
+
+    const nom = data.nombre
+    const cel = data.celular
+    console.log(nom);
+    console.log(cel);
+
+    await this.setState({
+      nombre: nom,
+      celular: cel
+    })
+  }
+
   render() {
     return (
       <div>

@@ -48,11 +48,12 @@ class Landing extends React.Component {
     });
   };
 
-  handleSubmit = (event) => {
+  handleSubmit = async(event) => {
     console.log("nombre-->",this.state.nombre);
     console.log("correo-->",this.state.correo);
     console.log("celular-->",this.state.celular);
-
+    //clear all session
+    localStorage.clear();
     axios
     .post("https://bambut.herokuapp.com/register",{
       nombre: this.state.nombre,
@@ -63,11 +64,9 @@ class Landing extends React.Component {
       console.log(response);
       //alert("se registro correctamente")
       toast.success('Usuario registrado')
-      this.setState({
-        nombre:"",
-        correo:"",
-        celular:""
-      });
+      localStorage.setItem('mydata', this.state.correo)
+      this.props.history.push("/inicio");
+      //window.location='/inicio';
     })
     .catch(error => {
       console.log(error);
@@ -78,9 +77,8 @@ class Landing extends React.Component {
         correo:"",
         celular:""
       });
-      window.location='/inicio';
+      //this.props.history.Push(`/inicio: ${ this.state.name }`);
     });
-
     event.preventDefault();
   };
 
