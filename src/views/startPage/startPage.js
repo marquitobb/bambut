@@ -17,6 +17,9 @@ class StartPage extends React.Component {
       correo: localStorage.getItem('mydata'),
       celular: "",
     };
+    if (!localStorage.getItem('mydata')) {
+      window.location="/"
+    }
   }
 
   async componentDidMount(){
